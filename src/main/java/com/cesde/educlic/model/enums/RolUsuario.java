@@ -1,5 +1,8 @@
 package com.cesde.educlic.model.enums;
 
-public class RolUsuario {
+public enum RolUsuario {
+    ESTUDIANTE, 
+    INSTRUCTOR,
+    ADMINISTRADOR
 
 }
