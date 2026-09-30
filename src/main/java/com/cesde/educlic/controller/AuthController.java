@@ -1,6 +1,6 @@
 package com.cesde.educlic.controller;
 
-import com.cesde.educlic.entity.Usuario;
+import com.cesde.educlic.model.entity.Usuario;
 import com.cesde.educlic.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

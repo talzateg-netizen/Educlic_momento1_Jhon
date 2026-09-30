@@ -1,6 +1,6 @@
 package com.cesde.educlic.repository;
 
-import com.cesde.educlic.entity.Pedido;
+import com.cesde.educlic.model.entity.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

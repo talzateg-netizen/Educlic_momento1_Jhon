@@ -1,6 +1,6 @@
 package com.cesde.educlic.controller;
 
-import com.cesde.educlic.entity.Categoria;
+import com.cesde.educlic.model.entity.Categoria;
 import com.cesde.educlic.service.CategoriaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

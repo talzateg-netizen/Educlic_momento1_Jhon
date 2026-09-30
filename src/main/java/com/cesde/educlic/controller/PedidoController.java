@@ -1,7 +1,7 @@
 package com.cesde.educlic.controller;
 
-import com.cesde.educlic.entity.EstadoPedido;
-import com.cesde.educlic.entity.Pedido;
+import com.cesde.educlic.model.entity.EstadoPedido;
+import com.cesde.educlic.model.entity.Pedido;
 import com.cesde.educlic.service.PedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.cesde.educlic.entity.Categoria;
+import com.cesde.educlic.model.entity.Categoria;
 import com.cesde.educlic.exception.BusinessException;
 import com.cesde.educlic.exception.ResourceNotFoundException;
 import com.cesde.educlic.repository.CategoriaRepository;

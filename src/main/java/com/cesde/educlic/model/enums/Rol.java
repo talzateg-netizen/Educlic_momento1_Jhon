@@ -1,4 +1,4 @@
-package com.cesde.educlic.entity;
+package com.cesde.educlic.model.enums;
 
 public enum Rol {
     ADMIN,

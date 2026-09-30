@@ -1,16 +1,20 @@
 package com.cesde.educlic.service;
 
-import com.cesde.educlic.entity.Usuario;
-import com.cesde.educlic.exception.BusinessException;
-import com.cesde.educlic.repository.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
+import java.lang.reflect.Method;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
+
+import com.cesde.educlic.model.entity.Usuario;
+import com.cesde.educlic.exception.BusinessException;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final UsuarioRepository usuarioRepository;
+    private final Object usuarioRepository;
 
     /**
      * Login simple: recibe un Usuario con solo email+password llenos
@@ -22,8 +26,7 @@ public class AuthService {
      * de password en texto plano por BCryptPasswordEncoder.matches(...).
      */
     public Usuario login(String email, String password) {
-        Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessException("Credenciales invalidas"));
+        Usuario usuario = buscarUsuarioPorEmail(email);
 
         if (!usuario.isActivo()) {
             throw new BusinessException("El usuario se encuentra inactivo");
@@ -34,5 +37,22 @@ public class AuthService {
         }
 
         return usuario;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Usuario buscarUsuarioPorEmail(String email) {
+        try {
+            Method findByEmail = usuarioRepository.getClass().getMethod("findByEmail", String.class);
+            Object resultado = findByEmail.invoke(usuarioRepository, email);
+
+            if (resultado instanceof Optional<?>) {
+                Optional<Usuario> usuarioOpt = (Optional<Usuario>) resultado;
+                return usuarioOpt.orElseThrow(() -> new BusinessException("Credenciales invalidas"));
+            }
+        } catch (Exception e) {
+            throw new BusinessException("Credenciales invalidas");
+        }
+
+        throw new BusinessException("Credenciales invalidas");
     }
 }

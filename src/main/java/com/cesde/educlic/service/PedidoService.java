@@ -1,6 +1,6 @@
 package com.cesde.educlic.service;
 
-import com.cesde.educlic.entity.*;
+import com.cesde.educlic.model.enums.EstadoPedido;
 import com.cesde.educlic.exception.BusinessException;
 import com.cesde.educlic.exception.ResourceNotFoundException;
 import com.cesde.educlic.repository.PedidoRepository;

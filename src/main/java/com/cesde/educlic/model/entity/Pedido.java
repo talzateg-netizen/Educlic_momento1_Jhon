@@ -1,4 +1,4 @@
-package com.cesde.educlic.entity;
+package com.cesde.educlic.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

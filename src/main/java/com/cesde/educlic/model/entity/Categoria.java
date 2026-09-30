@@ -1,4 +1,4 @@
-package com.cesde.educlic.entity;
+package com.cesde.educlic.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
