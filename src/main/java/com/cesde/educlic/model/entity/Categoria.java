@@ -1,28 +1,28 @@
-package com.cesde.educlic.model.entity;
+package com.cesde.educlic.entity;
 
-import com.cesde.educlic.model.base.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "categorias")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Categoria extends BaseEntity {
+public class Categoria {
 
-    @Column(name = "nombre", nullable = false, unique = true, length = 100)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = "El nombre de la categoria es obligatorio")
+    @Column(nullable = false, unique = true, length = 100)
     private String nombre;
 
-    @Column(name = "descripcion", length = 255)
+    @Column(length = 255)
     private String descripcion;
-
-    @Builder.Default
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Curso> cursos = new ArrayList<>();
 }

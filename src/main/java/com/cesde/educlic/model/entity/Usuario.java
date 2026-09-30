@@ -1,33 +1,60 @@
-package com.cesde.educlic.model.entity;
+package com.cesde.educlic.entity;
 
-import com.cesde.educlic.model.base.BaseEntity;
-import com.cesde.educlic.model.enums.RolUsuario;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuarios")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Usuario extends BaseEntity {
+public class Usuario {
 
-    @Column(name = "nombre", nullable = false, length = 100)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = "El nombre es obligatorio")
+    @Column(nullable = false, length = 120)
     private String nombre;
 
-    @Column(name = "email", nullable = false, unique = true, length = 150)
+    @NotBlank(message = "El email es obligatorio")
+    @Email(message = "El email no tiene un formato valido")
+    @Column(nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    // WRITE_ONLY: se puede enviar en el JSON de entrada (login/registro),
+    // pero nunca se incluye en el JSON de salida (para no exponer la clave).
+    // NOTA: se guarda en texto plano porque el proyecto aun no incluye
+    // spring-security. Antes de produccion, hashear con BCryptPasswordEncoder.
+    @NotBlank(message = "La contrasena es obligatoria")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "rol", nullable = false)
-    private RolUsuario rol;
+    @Column(length = 30)
+    private String telefono;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "perfil_id", referencedColumnName = "id")
-    private Perfil perfil;
+    @NotNull(message = "El rol es obligatorio")
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Rol rol;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean activo = true;
+
+    @Builder.Default
+    @Column(name = "fecha_registro", nullable = false, updatable = false)
+    private LocalDateTime fechaRegistro = LocalDateTime.now();
 }
