@@ -1,14 +1,15 @@
 package com.cesde.educlic.service;
 
-import com.cesde.educlic.model.entity.Usuario;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.cesde.educlic.exception.BusinessException;
 import com.cesde.educlic.exception.ResourceNotFoundException;
+import com.cesde.educlic.model.entity.Usuario;
 import com.cesde.educlic.repository.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import com.cesde.educlic.model.entity.Usua;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

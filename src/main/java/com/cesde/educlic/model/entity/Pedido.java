@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.cesde.educlic.model.enums.EstadoPedido;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
