@@ -1,54 +1,32 @@
 package com.cesde.educlic.service;
 
-import java.util.List;
-
+import com.cesde.educlic.model.entity.Categoria;
+import com.cesde.educlic.repository.CategoriaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cesde.educlic.model.entity.Categoria;
-import com.cesde.educlic.exception.BusinessException;
-import com.cesde.educlic.exception.ResourceNotFoundException;
-import com.cesde.educlic.repository.CategoriaRepository;
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class CategoriaService {
 
-    private final CategoriaRepository categoriaRepository;
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
-    public List<Categoria> listar() {
+    public List<Categoria> listarCategorias() {
         return categoriaRepository.findAll();
     }
 
-    public Categoria obtenerPorId(Long id) {
-        return buscarEntidad(id);
+    public Optional<Categoria> buscarPorId(Long id) {
+        return categoriaRepository.findById(id);
     }
 
-    public Categoria crear(Categoria categoria) {
-        if (categoriaRepository.existsByNombreIgnoreCase(categoria.getNombre())) {
-            throw new BusinessException("Ya existe una categoria con ese nombre");
-        }
-        categoria.setId(null);
+    public Categoria guardarCategoria(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }
 
-    public Categoria actualizar(Long id, Categoria cambios) {
-        Categoria categoria = buscarEntidad(id);
-        categoria.setNombre(cambios.getNombre());
-        categoria.setDescripcion(cambios.getDescripcion());
-        return categoriaRepository.save(categoria);
-    }
-
-    public void eliminar(Long id) {
-        if (!categoriaRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Categoria no encontrada con id " + id);
-        }
+    public void eliminarCategoria(Long id) {
         categoriaRepository.deleteById(id);
-    }
-
-    private Categoria buscarEntidad(Long id) {
-        return categoriaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada con id " + id));
     }
 }

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "productos")
@@ -42,14 +43,25 @@ public class Producto {
     @Column(nullable = false)
     private Integer stock;
 
+    // Coincide con la propiedad "imagen" del front (o "imagenUrl")
     @Column(name = "imagen_url", length = 500)
     private String imagenUrl;
 
-    // El cliente envia solo el id: "categoria": { "id": 1 }
-    // El service se encarga de buscar la categoria real en la BD.
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoria_id")
+    @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
+
+    // Mapeo para recibir el array de tallas del frontend ["38", "39", ...]
+    @ElementCollection
+    @CollectionTable(name = "producto_tallas", joinColumns = @JoinColumn(name = "producto_id"))
+    @Column(name = "talla", length = 10)
+    private List<String> tallas;
+
+    // Mapeo para recibir el array de colores del frontend ["Negro", "Blanco"]
+    @ElementCollection
+    @CollectionTable(name = "producto_colores", joinColumns = @JoinColumn(name = "producto_id"))
+    @Column(name = "color", length = 50)
+    private List<String> colores;
 
     @Builder.Default
     @Column(nullable = false)

@@ -1,71 +1,36 @@
 package com.cesde.educlic.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
-import com.cesde.educlic.exception.BusinessException;
-import com.cesde.educlic.exception.ResourceNotFoundException;
 import com.cesde.educlic.model.entity.Usuario;
 import com.cesde.educlic.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class UsuarioService {
 
-    private final UsuarioRepository usuarioRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
-    public List<Usuario> listar() {
+    public List<Usuario> listarUsuarios() {
         return usuarioRepository.findAll();
     }
 
-    public Usuario obtenerPorId(Long id) {
-        return buscarEntidad(id);
+    public Optional<Usuario> buscarPorId(Long id) {
+        return usuarioRepository.findById(id);
     }
 
-    public Usuario crear(Usuario usuario) {
-        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
-            throw new BusinessException("Ya existe un usuario registrado con ese email");
-        }
-        usuario.setId(null);
-        usuario.setActivo(true);
+    public Optional<Usuario> buscarPorEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
+
+    public Usuario guardarUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario actualizar(Long id, Usuario cambios) {
-        Usuario usuario = buscarEntidad(id);
-
-        if (!usuario.getEmail().equalsIgnoreCase(cambios.getEmail())
-                && usuarioRepository.existsByEmail(cambios.getEmail())) {
-            throw new BusinessException("Ya existe un usuario registrado con ese email");
-        }
-
-        usuario.setNombre(cambios.getNombre());
-        usuario.setEmail(cambios.getEmail());
-        usuario.setPassword(cambios.getPassword());
-        usuario.setTelefono(cambios.getTelefono());
-        usuario.setRol(cambios.getRol());
-
-        return usuarioRepository.save(usuario);
-    }
-
-    public void desactivar(Long id) {
-        Usuario usuario = buscarEntidad(id);
-        usuario.setActivo(false);
-        usuarioRepository.save(usuario);
-    }
-
-    public void eliminar(Long id) {
-        if (!usuarioRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Usuario no encontrado con id " + id);
-        }
+    public void eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
-    }
-
-    private Usuario buscarEntidad(Long id) {
-        return usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id " + id));
     }
 }

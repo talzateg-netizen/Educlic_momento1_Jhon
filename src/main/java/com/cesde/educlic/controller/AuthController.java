@@ -2,22 +2,32 @@ package com.cesde.educlic.controller;
 
 import com.cesde.educlic.model.entity.Usuario;
 import com.cesde.educlic.service.AuthService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-// Usado por login.html.
-// Body esperado: { "email": "cliente@tienda.com", "password": "1234" }
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class AuthController {
 
-    private final AuthService authService;
+    @Autowired
+    private AuthService authService;
+
+    @PostMapping("/registro")
+    public ResponseEntity<Usuario> registrar(@RequestBody Usuario usuario) {
+        Usuario nuevoUsuario = authService.registrar(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
+    }
 
     @PostMapping("/login")
-    public ResponseEntity<Usuario> login(@RequestBody Usuario credenciales) {
-        Usuario usuario = authService.login(credenciales.getEmail(), credenciales.getPassword());
-        return ResponseEntity.ok(usuario);
+    public ResponseEntity<Usuario> login(@RequestBody Usuario usuario) {
+        try {
+            Usuario usuarioLogueado = authService.login(usuario.getEmail(), usuario.getPassword());
+            return ResponseEntity.ok(usuarioLogueado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }

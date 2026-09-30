@@ -1,11 +1,11 @@
 package com.cesde.educlic.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Entity
 @Table(name = "categorias")
@@ -19,10 +19,9 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El nombre de la categoria es obligatorio")
     @Column(nullable = false, unique = true, length = 100)
-    private String nombre;
+    private String nombre; // Coincide con valores como "Tenis" del front
 
-    @Column(length = 255)
-    private String descripcion;
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Producto> productos;
 }
