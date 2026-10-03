@@ -1,25 +1,29 @@
 package com.cesde.educlic.service;
 
-import com.cesde.educlic.model.entity.Categoria;
-import com.cesde.educlic.repository.CategoriaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.cesde.educlic.exception.ResourceNotFoundException;
+import com.cesde.educlic.model.entity.Categoria;
+import com.cesde.educlic.repository.CategoriaRepository;
 
 @Service
 public class CategoriaService {
 
-    @Autowired
-    private CategoriaRepository categoriaRepository;
+    private final CategoriaRepository categoriaRepository;
+
+    public CategoriaService(CategoriaRepository categoriaRepository) {
+        this.categoriaRepository = categoriaRepository;
+    }
 
     public List<Categoria> listarCategorias() {
         return categoriaRepository.findAll();
     }
 
-    public Optional<Categoria> buscarPorId(Long id) {
-        return categoriaRepository.findById(id);
+    public Categoria buscarPorId(Long id) {
+        return categoriaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Categoría no encontrada con ID: " + id));
     }
 
     public Categoria guardarCategoria(Categoria categoria) {
@@ -27,6 +31,7 @@ public class CategoriaService {
     }
 
     public void eliminarCategoria(Long id) {
-        categoriaRepository.deleteById(id);
+        Categoria categoria = buscarPorId(id);
+        categoriaRepository.delete(categoria);
     }
 }

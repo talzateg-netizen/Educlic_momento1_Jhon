@@ -1,19 +1,28 @@
 package com.cesde.educlic.controller;
 
-import com.cesde.educlic.model.entity.Usuario;
-import com.cesde.educlic.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cesde.educlic.model.entity.Usuario;
+import com.cesde.educlic.service.AuthService;
+
+
 
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
 public class AuthController {
+    private final AuthService authService;
 
-    @Autowired
-    private AuthService authService;
+    // Constructor para inyección de dependencias
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/registro")
     public ResponseEntity<Usuario> registrar(@RequestBody Usuario usuario) {

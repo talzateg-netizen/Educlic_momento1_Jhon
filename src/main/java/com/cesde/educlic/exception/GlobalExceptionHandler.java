@@ -1,16 +1,16 @@
 package com.cesde.educlic.exception;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -51,4 +51,12 @@ public class GlobalExceptionHandler {
         body.put("error", message);
         return ResponseEntity.status(status).body(body);
     }
-}
+/*SE ARGEGA REGLA DE NEGOCIO PARA MANEJAR EXCEPCIONES ESPECIFICAS DE NEGOCIO*/
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<Map<String, String>> manejarBusinessException(BusinessException ex) {
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("error", "Error en regla de negocio");
+        respuesta.put("mensaje", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+    }
+}   
