@@ -50,7 +50,7 @@ public class ProductoService {
         producto.setColores(dto.getColores());
         producto.setActivo(dto.isActivo());
 
-        // 3. Validamos las tallas
+        // 3. Validamos las tallas  
         validarTallas(producto);
 
         return productoRepository.save(producto);
