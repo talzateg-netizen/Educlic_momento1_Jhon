@@ -1,18 +1,16 @@
-package com.cesde.educlic.dto.request;
+package com.cesde.educlic.dto;
 
-import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PedidoRequestDto {
-    @NotNull(message = "El usuario es obligatorio")
     private Long usuarioId;
-
-    @NotNull(message = "El pedido debe contener detalles de productos")
     private List<DetallePedidoRequestDto> detalles;
-
-    // Getters y Setters
-    public Long getUsuarioId() { return usuarioId; }
-    public void setUsuarioId(Long usuarioId) { this.usuarioId = usuarioId; }
-    public List<DetallePedidoRequestDto> getDetalles() { return detalles; }
-    public void setDetalles(List<DetallePedidoRequestDto> detalles) { this.detalles = detalles; }
 }

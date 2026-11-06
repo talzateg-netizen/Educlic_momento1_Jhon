@@ -1,15 +1,15 @@
-package com.cesde.educlic.dto.request;
+package com.cesde.educlic.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CategoriaRequestDto {
-    @NotBlank(message = "El nombre de la categoría es obligatorio")
     private String nombre;
     private String descripcion;
-
-    // Getters y Setters
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 }

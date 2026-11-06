@@ -1,6 +1,7 @@
 package com.cesde.educlic.controller;
 
-import com.cesde.educlic.dto.UsuarioDto;
+import com.cesde.educlic.dto.UsuarioRequestDto;
+import com.cesde.educlic.dto.UsuarioResponseDto;
 import com.cesde.educlic.model.entity.Usuario;
 import com.cesde.educlic.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,13 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/registro")
-    public ResponseEntity<Usuario> registrar(@RequestBody UsuarioDto usuarioDto) {
+    public ResponseEntity<Usuario> registrar(@RequestBody UsuarioRequestDto usuarioDto) {
         Usuario nuevoUsuario = authService.registrar(usuarioDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Usuario> login(@RequestBody UsuarioDto usuarioDto) {
+    public ResponseEntity<Usuario> login(@RequestBody UsuarioRequestDto usuarioDto) {
         try {
             // Extraemos email y password del DTO que envía Postman
             Usuario usuarioLogueado = authService.login(usuarioDto.getEmail(), usuarioDto.getPassword());

@@ -21,7 +21,10 @@ public class Categoria {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 100)
-    private String nombre; // Coincide con valores como "Tenis" del front
+    private String nombre;
+
+    @Column(length = 500)
+    private String descripcion; 
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore

@@ -1,6 +1,6 @@
 package com.cesde.educlic.controller;
 
-import com.cesde.educlic.dto.UsuarioDto;
+import com.cesde.educlic.dto.UsuarioRequestDto;
 import com.cesde.educlic.model.entity.Usuario;
 import com.cesde.educlic.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -31,13 +31,13 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> crear(@Valid @RequestBody UsuarioDto usuarioDto) {
+    public ResponseEntity<Usuario> crear(@Valid @RequestBody UsuarioRequestDto usuarioDto) {
         Usuario nuevo = usuarioService.guardarUsuario(usuarioDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> actualizar(@PathVariable Long id, @Valid @RequestBody UsuarioDto usuarioDto) {
+    public ResponseEntity<Usuario> actualizar(@PathVariable Long id, @Valid @RequestBody UsuarioRequestDto usuarioDto) {
         try {
             Usuario actualizado = usuarioService.actualizarUsuario(id, usuarioDto);
             return ResponseEntity.ok(actualizado);

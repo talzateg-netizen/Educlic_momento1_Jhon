@@ -1,15 +1,20 @@
-package com.cesde.educlic.dto.request;
+package com.cesde.educlic.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.List;
 
-public class PerfilRequestDto {
-    @NotBlank(message = "El nombre del perfil es obligatorio")
-    private String nombre;
-    private String descripcion;
-
-    // Getters y Setters
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class PedidoResponseDto {
+    private Long id;
+    private LocalDateTime fecha;
+    private String estado;
+    private Double total;
+    private List<DetallePedidoResponseDto> detalles;
 }

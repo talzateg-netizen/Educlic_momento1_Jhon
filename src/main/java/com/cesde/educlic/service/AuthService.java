@@ -1,7 +1,6 @@
 package com.cesde.educlic.service;
 
-
-import com.cesde.educlic.dto.UsuarioDto;
+import com.cesde.educlic.dto.UsuarioRequestDto;
 import com.cesde.educlic.model.entity.Usuario;
 import com.cesde.educlic.model.enums.Rol;
 import com.cesde.educlic.repository.UsuarioRepository;
@@ -16,13 +15,13 @@ public class AuthService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public Usuario registrar(UsuarioDto dto) {
+    public Usuario registrar(UsuarioRequestDto dto) {
         // Mapeamos el DTO a la Entidad Usuario para guardarla en la base de datos
         Usuario usuario = Usuario.builder()
                 .nombre(dto.getNombre())
                 .email(dto.getEmail())
-                .password(dto.getPassword()) // Recuerda encriptarla con BCrypt si te lo han enseñado en clase
-                .rol(dto.getRol() != null ? dto.getRol() : Rol.CLIENTE)
+                .password(dto.getPassword())
+                .rol(Rol.CLIENTE) // Por defecto en registro público
                 .build();
 
         return usuarioRepository.save(usuario);

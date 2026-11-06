@@ -1,6 +1,6 @@
 package com.cesde.educlic.controller;
 
-import com.cesde.educlic.dto.CategoriaDto;
+import com.cesde.educlic.dto.CategoriaRequestDto;
 import com.cesde.educlic.model.entity.Categoria;
 import com.cesde.educlic.service.CategoriaService;
 import jakarta.validation.Valid;
@@ -32,13 +32,13 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> crear(@Valid @RequestBody CategoriaDto categoriaDto) {
+    public ResponseEntity<Categoria> crear(@Valid @RequestBody CategoriaRequestDto categoriaDto) {
         Categoria nueva = categoriaService.guardarCategoria(categoriaDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nueva);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> actualizar(@PathVariable Long id, @Valid @RequestBody CategoriaDto categoriaDto) {
+    public ResponseEntity<Object> actualizar(@PathVariable Long id, @Valid @RequestBody CategoriaRequestDto categoriaDto) {
         try {
             Categoria actualizado = categoriaService.actualizarCategoria(id, categoriaDto);
             return ResponseEntity.ok(actualizado);

@@ -1,6 +1,6 @@
 package com.cesde.educlic.controller;
 
-import com.cesde.educlic.dto.ProductoDto;
+import com.cesde.educlic.dto.ProductoRequestDto;
 import com.cesde.educlic.model.entity.Producto;
 import com.cesde.educlic.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +37,13 @@ public class ProductoController {
     }
 
     @PostMapping
-    public ResponseEntity<Producto> crear(@RequestBody ProductoDto productoDto) {
+    public ResponseEntity<Producto> crear(@RequestBody ProductoRequestDto productoDto) {
         Producto nuevoProducto = productoService.guardarProducto(productoDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoProducto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Producto> actualizar(@PathVariable Long id, @RequestBody ProductoDto productoDto) {
+    public ResponseEntity<Producto> actualizar(@PathVariable Long id, @RequestBody ProductoRequestDto productoDto) {
         try {
             Producto actualizado = productoService.actualizarProducto(id, productoDto);
             return ResponseEntity.ok(actualizado);

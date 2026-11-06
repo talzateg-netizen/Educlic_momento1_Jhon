@@ -1,6 +1,7 @@
 package com.cesde.educlic.config;
 
-import com.cesde.educlic.entity.Categoria;
+import com.cesde.educlic.model.entity.Usuario;
+import com.cesde.educlic.model.entity.Categoria;
 import com.cesde.educlic.repository.CategoriaRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
