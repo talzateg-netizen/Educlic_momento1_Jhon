@@ -7,6 +7,9 @@ import java.util.List;
 
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
-    // Útil para filtrar productos por categoría si el front lo necesita
+    
     List<Producto> findByCategoriaId(Long categoriaId);
+
+    // Nuevo método para buscar productos por el nombre de la categoría en texto
+    List<Producto> findByCategoriaNombreIgnoreCase(String nombreCategoria);
 }

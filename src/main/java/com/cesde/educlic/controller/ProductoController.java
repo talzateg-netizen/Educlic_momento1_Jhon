@@ -18,8 +18,13 @@ public class ProductoController {
     private ProductoService productoService;
 
     @GetMapping
-    public ResponseEntity<List<Producto>> listar() {
-        List<Producto> productos = productoService.listarProductos();
+    public ResponseEntity<List<Producto>> listar(@RequestParam(required = false) String categoria) {
+        List<Producto> productos;
+        if (categoria != null && !categoria.isEmpty()) {
+            productos = productoService.listarPorNombreCategoria(categoria);
+        } else {
+            productos = productoService.listarProductos();
+        }
         return ResponseEntity.ok(productos);
     }
 

@@ -20,6 +20,10 @@ public class ProductoService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+    
+    public List<Producto> listarPorNombreCategoria(String nombreCategoria) {
+        return productoRepository.findByCategoriaNombreIgnoreCase(nombreCategoria);
+    }
 
     public List<Producto> listarProductos() {
         return productoRepository.findAll();
